@@ -5,14 +5,38 @@ services:
     image: node:16-alpine
     container_name: js-server
     user: node
-    tty: true
-    stdin_open: true
+    # tty: true
+    # stdin_open: true
+    command: yarn start
     environment:
       PORT: 3000
     ports:
       - 3000:3000
-      - 4000:4000
       - 9229:9229
     working_dir: /home/node/app
     volumes:
       - ./:/home/node/app
+    networks:
+      - chat
+
+  chat:
+    image: node:16-alpine
+    container_name: chat
+    user: node
+    tty: true
+    stdin_open: true
+    # command: yarn chat
+    working_dir: /home/node/app
+    environment:
+      CONV_ID: zendesk
+    volumes:
+      - ./:/home/node/app
+    depends_on:
+      - js-server
+    networks:
+      - chat
+
+networks:
+  chat:
+    name: chat
+
