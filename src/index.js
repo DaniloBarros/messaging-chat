@@ -1,9 +1,15 @@
 import express from 'express'
+import { createRoutes } from './routes/conversation.js'
 
 async function main () {
   const app = express()
+  app.use(express.json())
 
   app.get('/', (_, res) => res.send('Hello'))
+
+  app.use('/conversation', createRoutes())
+  app.use('/sendmessage', createRoutes())
+
   app.listen(3000, err => {
     if (err) {
       throw err
