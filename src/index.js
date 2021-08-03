@@ -4,6 +4,11 @@ import { createRoutes } from './routes/conversation.js'
 
 const PORT = process.env.PORT || 3000
 const sockets = {
+  // This data is structured in this way (object inside an object)
+  // Just so the object "socket" remains in memory throughout the
+  // server's execution and is mutated by reference
+  // Thus, the sockets instance could be shared if we later want to
+  // have a updated list of conversations or messages
   conversations: {}
 }
 
